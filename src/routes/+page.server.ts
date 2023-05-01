@@ -21,4 +21,4 @@ export const load: PageServerLoad<{ photo: Photo; photos: Photo[] }> = async () 
 	return { photo, photos };
 };
 
-const generateRandomNumber = (max: number) => Math.floor(Math.random() * (max + 1));
+const generateRandomNumber = (max: number) => Math.floor(Math.random() * max);
