@@ -3,6 +3,8 @@
 	import Frame from '$lib/components/Frame.svelte';
 	import Info from '../lib/components/Info.svelte';
 	import RefreshButton from '$lib/components/RefreshButton.svelte';
+	import AmazingTitle from '$lib/components/Text/AmazingTitle.svelte';
+	import SamantaCard from '$lib/components/Card/SamantaCard.svelte';
 
 	export let data: PageServerData;
 
@@ -20,15 +22,29 @@
 	const generateRandomNumber = (max: number) => Math.floor(Math.random() * max);
 </script>
 
-<main
-	class="w-screen h-screen flex justify-center items-center bg-white flex-col gap-10 bg-gradient-to-br from-indigo-200 to-pink-200"
->
-	<h1 class=" text-4xl font-bold font-mono text-center">Random Samanta picture generator</h1>
+<main class="w-screen h-screen flex justify-center items-center bg-white flex-col gap-10 bg-g2">
+	<!-- <h1 class=" text-4xl font-bold font-mono text-center">Random Samanta picture generator</h1> -->
+	<AmazingTitle>Samanta's Card Game</AmazingTitle>
 	{#if !photo}
 		<p>Cargando foto</p>
 	{:else}
-		<Frame src={photo.url} />
+		<SamantaCard cardInfo={photo} />
+		<!-- <Frame src={photo.url} />
 		<Info title={photo.title} />
-		<RefreshButton on:click={refreshPhoto} />
+		<RefreshButton on:click={refreshPhoto} /> -->
 	{/if}
 </main>
+
+<style lang="postcss">
+	.bg-g {
+		@apply bg-gradient-to-br from-indigo-200 to-pink-200;
+	}
+
+	.bg-g1 {
+		@apply bg-gradient-to-br from-[#D5D0E5] to-[#F3E6E8];
+	}
+
+	.bg-g2 {
+		@apply bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-100 via-slate-100 to-sky-200;
+	}
+</style>
