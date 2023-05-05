@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { tweened } from 'svelte/motion';
 	import { cubicOut, cubicIn } from 'svelte/easing';
-
+	import { createEventDispatcher } from 'svelte';
 	import DiscoveredCard from './DiscoveredCard.svelte';
 	import HiddenCard from './HiddenCard.svelte';
 
-	export const cardInfo: {
+	export let cardInfo: {
 		url: string;
 		title: string;
-	} | null = null;
+	};
+
+	const dispatch = createEventDispatcher();
 
 	const ANIMATION_CYCLE_MILLISECONDS = 1000;
 
@@ -49,8 +51,11 @@
 
 		setTimeout(() => {
 			discoveredCard.spin = false;
+			dispatch('card-discover', {});
 		}, ANIMATION_CYCLE_MILLISECONDS * 8 + ANIMATION_CYCLE_MILLISECONDS / 2);
 	};
+
+	console.log(cardInfo);
 </script>
 
 {#if !showDiscoveredCard}
@@ -64,5 +69,6 @@
 		spin={discoveredCard.spin}
 		showTier={discoveredCard.showTier}
 		animationDuration={$animationDurationOfDiscoveredCard}
+		imageUrl={cardInfo.url}
 	/>
 {/if}

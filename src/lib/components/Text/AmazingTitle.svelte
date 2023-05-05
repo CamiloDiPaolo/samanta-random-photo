@@ -9,13 +9,13 @@
 	.rainbow-gradient {
 		background-image: linear-gradient(
 			to left,
-			red,
-			orange 14%,
-			yellow 28%,
-			green 42%,
-			blue 56%,
-			purple 70%,
-			violet 84%
+			#ec4899,
+			#d946ef 14%,
+			#a855f7 28%,
+			#8b5cf6 42%,
+			#6366f1 56%,
+			#3b82f6 70%,
+			#0ea5e9 84%
 		);
 	}
 </style>

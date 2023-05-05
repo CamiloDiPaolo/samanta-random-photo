@@ -1,50 +1,29 @@
 <script lang="ts">
-	import type { PageServerData } from './$types';
-	import Frame from '$lib/components/Frame.svelte';
-	import Info from '../lib/components/Info.svelte';
-	import RefreshButton from '$lib/components/RefreshButton.svelte';
+	import FeatureCard from '$lib/components/Home/FeatureCard.svelte';
+	import AmazingLink from '$lib/components/Text/AmazingLink.svelte';
 	import AmazingTitle from '$lib/components/Text/AmazingTitle.svelte';
-	import SamantaCard from '$lib/components/Card/SamantaCard.svelte';
+	import { CircleStack, ShoppingBag, Trophy } from 'svelte-hero-icons';
 
-	export let data: PageServerData;
-
-	let photo = data.photo;
-
-	const refreshPhoto = () => {
-		photo = data.photos
-			.filter((photoNew) => photoNew.id !== photo.id)
-			.at(
-				generateRandomNumber(data.photos.filter((photoNew) => photoNew.id !== photo.id).length)
-			) as any;
-		console.log(photo);
-	};
-
-	const generateRandomNumber = (max: number) => Math.floor(Math.random() * max);
+	const featuresArr = [
+		{
+			title: 'Colecciona cartas',
+			description:
+				'Colecciona todas las cartas de Samanta para completar la coleccion y reclamar la recompensa!',
+			icon: ShoppingBag
+		},
+		{
+			title: 'Competi',
+			description:
+				'Suma puntos y usalos para perjudicar a otras personas y escalar en la tabla de posiciones!',
+			icon: Trophy
+		}
+	];
 </script>
 
-<main class="w-screen h-screen flex justify-center items-center bg-white flex-col gap-10 bg-g2">
-	<!-- <h1 class=" text-4xl font-bold font-mono text-center">Random Samanta picture generator</h1> -->
-	<AmazingTitle>Samanta's Card Game</AmazingTitle>
-	{#if !photo}
-		<p>Cargando foto</p>
-	{:else}
-		<SamantaCard cardInfo={photo} />
-		<!-- <Frame src={photo.url} />
-		<Info title={photo.title} />
-		<RefreshButton on:click={refreshPhoto} /> -->
-	{/if}
-</main>
-
-<style lang="postcss">
-	.bg-g {
-		@apply bg-gradient-to-br from-indigo-200 to-pink-200;
-	}
-
-	.bg-g1 {
-		@apply bg-gradient-to-br from-[#D5D0E5] to-[#F3E6E8];
-	}
-
-	.bg-g2 {
-		@apply bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-100 via-slate-100 to-sky-200;
-	}
-</style>
+<AmazingTitle>Samanta's Card Game</AmazingTitle>
+<div class="flex gap-10 m-10">
+	{#each featuresArr as { title, description, icon }}
+		<FeatureCard {title} {description} {icon} />
+	{/each}
+</div>
+<AmazingLink href="/daily-card">Comenzar!</AmazingLink>

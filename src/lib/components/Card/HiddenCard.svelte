@@ -4,10 +4,10 @@
 </script>
 
 <button
-	class="h-96 w-64 border border-stone-800 p-20 rounded-xl flex justify-center items-center bg-white/50 relative backdrop-blur-lg shadow-lg hover:cursor-pointer hover:-translate-y-3 hover:rotate-3 duration-75"
+	class=" border border-stone-800 p-10 rounded-xl flex justify-center items-center bg-white/50 relative backdrop-blur-lg shadow-lg hover:cursor-pointer hover:-translate-y-3 hover:rotate-3 duration-75"
 	on:click
 	class:animate-discover-card-1={spin}
 	style:animation-duration={`${animationDuration}s`}
 >
-	<p class="text-[200px] relative z-10">?</p>
+	<p class="text-[200px] relative z-10 h-96 w-[214px]">?</p>
 </button>

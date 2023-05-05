@@ -1,20 +1,23 @@
 <script lang="ts">
+	import DiscoveredCardImage from './DiscoveredCardImage.svelte';
+
 	export let spin: boolean = false;
 	export let animationDuration: number = 1;
 	export let tier: 1 | 2 | 3 | 4 = 4;
 	export let showTier: boolean = false;
+	export let imageUrl: string;
 </script>
 
-<div
-	class="relative"
-	class:animate-discover-card-2={spin}
-	style:animation-duration={`${animationDuration}s`}
->
+<div class="relative">
 	<button
-		class="z-10 h-96 w-64 border border-stone-800 p-20 rounded-xl flex justify-center items-center bg-white/50 relative backdrop-blur-lg shadow-lg duration-75"
+		class:animate-discover-card-2={spin}
+		style:animation-duration={`${animationDuration}s`}
+		class="z-10 border border-stone-800 p-10 rounded-xl flex justify-center items-center bg-white/20 relative backdrop-blur-lg shadow-lg duration-75"
 		on:click
 	>
-		<p class="text-[200px] relative z-10">!</p>
+		<!-- <p class="text-[200px] relative z-10">!</p> -->
+		<!-- <img src={imageUrl} class="h-96 rounded-xl" alt="samanta card" /> -->
+		<DiscoveredCardImage src={imageUrl} />
 	</button>
 	<!-- SHADOW -->
 	<div

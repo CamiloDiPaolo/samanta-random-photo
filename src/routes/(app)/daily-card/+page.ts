@@ -1,6 +1,5 @@
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
-import { createClient } from '@supabase/supabase-js';
-import type { PageServerLoad } from './$types';
+import type { PageLoad } from './$types';
+import supabase from '$lib/supabase';
 
 type Photo = {
 	id: number;
@@ -9,9 +8,9 @@ type Photo = {
 	url: string;
 };
 
-export const load: PageServerLoad<{ photo: Photo; photos: Photo[] }> = async () => {
-	const supabase = createClient(PUBLIC_SUPABASE_URL as string, PUBLIC_SUPABASE_ANON_KEY as string);
+export const ssr = false;
 
+export const load: PageLoad<{ photo: Photo; photos: Photo[] }> = async () => {
 	const { data, error } = await supabase.from('photos').select('*');
 
 	if (error) throw new Error('ocurrio un error cargando la foto de samanta');
