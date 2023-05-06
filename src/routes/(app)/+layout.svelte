@@ -10,7 +10,6 @@
 
 		if (!session) return null;
 
-		console.log(session);
 		sessionStore.set(session);
 
 		return session;

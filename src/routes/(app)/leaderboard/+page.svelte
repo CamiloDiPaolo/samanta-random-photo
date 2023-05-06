@@ -4,7 +4,6 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	console.log(data);
 	const leaderboard = data.leaderboard;
 </script>
 
@@ -13,8 +12,8 @@
 	class="flex flex-col gap-2 border border-fuchsia-400 sm:p-10 p-2 rounded-lg bg-fuchsia-200/10 backdrop-blur-lg h-2/3 overflow-y-scroll"
 >
 	{#each leaderboard.sort((user1, user2) => {
-		const score1 = user1.tier_3 * 10 + user1.tier_2 * 5 + user1.tier1;
-		const score2 = user2.tier_3 * 10 + user2.tier_2 * 5 + user2.tier1;
+		const score1 = user1.tier_3 * 10 + user1.tier_2 * 5 + user1.tier_1;
+		const score2 = user2.tier_3 * 10 + user2.tier_2 * 5 + user2.tier_1;
 		return score2 - score1;
 	}) as score}
 		<div class="flex justify-between items-center sm:gap-10 gap-2">
