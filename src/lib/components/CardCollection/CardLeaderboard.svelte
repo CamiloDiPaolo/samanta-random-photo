@@ -12,9 +12,6 @@
 	>
 		{number}
 	</button>
-	<!-- <div
-		class="rounded-lg bg-gradient-to-br animate-rainbow-fast absolute top-0 left-0 w-full h-full z-0"
-	/> -->
 </div>
 
 <style lang="postcss">
