@@ -21,5 +21,5 @@
 {#if loaded}
 	<img {src} class="h-96 rounded-xl" alt="samanta card" />
 {:else}
-	<p class="text-[200px] relative z-10 h-96 w-[216px]">!</p>
+	<p class="sm:text-[200px] text-[170px] relative z-10 sm:h-96 sm:w-[214px] h-72 w-[200px]">!</p>
 {/if}

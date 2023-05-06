@@ -1,23 +1,39 @@
 import type { PageLoad } from './$types';
-import supabase from '$lib/supabase';
-
-type Photo = {
-	id: number;
-	created_at: string;
-	title: string;
-	url: string;
-};
+import supabase, { getCard } from '$lib/supabase';
+import { getSession, getDailyCard, getRandomCard } from '$lib/supabase';
+import type { DailyCard, Photo } from '$lib/types/supabase.interface';
 
 export const ssr = false;
 
-export const load: PageLoad<{ photo: Photo; photos: Photo[] }> = async () => {
-	const { data, error } = await supabase.from('photos').select('*');
+export const load: PageLoad<{ photo: Photo; millisecondsToNextCard?: number }> = async () => {
+	const session = await getSession();
+	const dailyCards = await getDailyCard(session?.user.id as string);
 
-	if (error) throw new Error('ocurrio un error cargando la foto de samanta');
+	if (!dailyCards || dailyCards.length === 0) return { photo: await getRandomCard() };
 
-	const photo = data.at(generateRandomNumber(data.length)) as Photo;
-	const photos = data as Photo[];
-	return { photo, photos };
+	const newerDailyCard = dailyCards
+		.sort((dailyCard1, dailyCard2) => {
+			const date1 = new Date(dailyCard1.date);
+			const date2 = new Date(dailyCard2.date);
+			return date2.getTime() - date1.getTime();
+		})
+		.at(0) as DailyCard;
+
+	const currentDate = new Date();
+	const newerCardDate = new Date(newerDailyCard.date);
+
+	const FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
+
+	const lastCardUnderFiveMinutes =
+		currentDate.getTime() - newerCardDate.getTime() < FIVE_MINUTES_IN_MILLISECONDS;
+
+	if (lastCardUnderFiveMinutes)
+		return {
+			photo: await getCard(newerDailyCard.photo_id),
+			millisecondsToNextCard: currentDate.getTime() - newerCardDate.getTime()
+		};
+
+	return {
+		photo: await getRandomCard()
+	};
 };
-
-const generateRandomNumber = (max: number) => Math.floor(Math.random() * max);

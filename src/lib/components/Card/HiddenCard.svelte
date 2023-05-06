@@ -9,5 +9,5 @@
 	class:animate-discover-card-1={spin}
 	style:animation-duration={`${animationDuration}s`}
 >
-	<p class="text-[200px] relative z-10 h-96 w-[214px]">?</p>
+	<p class="sm:text-[200px] text-[170px] relative z-10 h-96 w-[214px] h">?</p>
 </button>

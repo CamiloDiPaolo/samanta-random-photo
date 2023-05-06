@@ -1,35 +1,80 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Icon, HandRaised } from 'svelte-hero-icons';
-	import SamantaCard from '$lib/components/Card/SamantaCard.svelte';
+	import { Icon, HandRaised, ArrowPath } from 'svelte-hero-icons';
 	import sessionStore from '$lib/stores/session';
+	import { addCardToCollection, addScore, setDailyCard, updateLeaderboard } from '$lib/supabase';
+	import SamantaCard from '$lib/components/Card/SamantaCard.svelte';
+	import Timer from '$lib/components/Card/Timer.svelte';
+	import { identity } from 'svelte/internal';
+	import AmazingTitle from '$lib/components/Text/AmazingTitle.svelte';
 
 	export let data: PageData;
 
 	let photo = data.photo;
-	let showGrabButton = false;
 
-	const grabPhoto = async () => {
-		console.log($sessionStore);
+	let millisecondsToNextCard = data.millisecondsToNextCard;
+	let minutesCounter = 0;
+	let secondsCounter = 0;
+
+	let showReloadButton = false;
+
+	const cardDiscover = async () => {
+		await setDailyCard($sessionStore.user.id, photo?.id as number);
+		await addCardToCollection($sessionStore.user.id, photo.id);
+		await addScore($sessionStore.user.id, photo.tier);
+		await updateLeaderboard($sessionStore.user.id);
+
+		const FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
+		millisecondsToNextCard = FIVE_MINUTES_IN_MILLISECONDS;
+		initTimer();
 	};
+
+	const initTimer = () => {
+		if (!millisecondsToNextCard) return;
+
+		const FIVE_MINUTES_IN_SECONDS = 5 * 60;
+
+		let secondsUntilNextCard = Math.floor(millisecondsToNextCard / 1000);
+
+		const intervalId = setInterval(() => {
+			secondsUntilNextCard += 1;
+
+			const timeUntilNextCardInSeconds = FIVE_MINUTES_IN_SECONDS - secondsUntilNextCard;
+
+			minutesCounter = Math.floor(timeUntilNextCardInSeconds / 60);
+			secondsCounter = Math.floor(timeUntilNextCardInSeconds % 60);
+
+			if (minutesCounter <= 0 && secondsCounter <= 0) {
+				clearInterval(intervalId);
+				showReloadButton = true;
+			}
+		}, 1000);
+	};
+
+	if (millisecondsToNextCard) initTimer();
 </script>
 
 {#if !photo}
 	<p>Cargando foto</p>
 {:else}
+	<AmazingTitle>Samanta Card</AmazingTitle>
 	<SamantaCard
 		cardInfo={photo}
-		on:card-discover={() => {
-			showGrabButton = true;
-		}}
+		on:card-discover={cardDiscover}
+		showDiscoveredCard={millisecondsToNextCard ? true : false}
 	/>
-	{#if showGrabButton}
+	{#if showReloadButton}
 		<button
 			class="bg-white shadow-lg rounded-full p-5 hover:text-fuchsia-500 hover:-translate-y-1"
-			on:click={grabPhoto}
+			on:click={() => {
+				location.reload();
+			}}
 		>
-			<Icon src={HandRaised} class="w-10" />
+			<Icon src={ArrowPath} class="w-10" />
 		</button>
+	{/if}
+	{#if millisecondsToNextCard && !showReloadButton && minutesCounter != 0 && secondsCounter != 0}
+		<Timer minutes={minutesCounter} seconds={secondsCounter} />
 	{/if}
 {/if}
 

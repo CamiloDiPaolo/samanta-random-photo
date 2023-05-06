@@ -21,7 +21,7 @@
 	];
 </script>
 
-<nav class="flex fixed top-10 left-1/2 -translate-x-1/2 gap-10">
+<nav class="flex fixed top-10 left-1/2 -translate-x-1/2 gap-10 z-50">
 	{#each menus as menu}
 		<a
 			href={menu.href}

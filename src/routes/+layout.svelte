@@ -2,7 +2,9 @@
 	import '../app.css';
 </script>
 
-<main class="w-screen h-screen flex justify-center items-center bg-white flex-col gap-10 bg-g2">
+<main
+	class="w-screen h-screen flex justify-center items-center bg-white flex-col gap-10 bg-g2 overflow-y-scroll"
+>
 	<slot />
 </main>
 

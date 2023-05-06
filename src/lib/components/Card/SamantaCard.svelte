@@ -8,13 +8,13 @@
 	export let cardInfo: {
 		url: string;
 		title: string;
+		tier: number;
 	};
+	export let showDiscoveredCard = false;
 
 	const dispatch = createEventDispatcher();
 
 	const ANIMATION_CYCLE_MILLISECONDS = 1000;
-
-	let showDiscoveredCard = false;
 
 	const hiddenCard = {
 		spin: false
@@ -22,7 +22,7 @@
 
 	const discoveredCard = {
 		spin: false,
-		showTier: false
+		showTier: showDiscoveredCard
 	};
 
 	const animationDurationOfHiddenCard = tweened(1, {
@@ -70,5 +70,6 @@
 		showTier={discoveredCard.showTier}
 		animationDuration={$animationDurationOfDiscoveredCard}
 		imageUrl={cardInfo.url}
+		tier={cardInfo.tier}
 	/>
 {/if}

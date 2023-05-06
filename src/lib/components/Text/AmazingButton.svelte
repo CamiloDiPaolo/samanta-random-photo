@@ -1,8 +1,13 @@
-<h1
-	class="text-3xl sm:text-4xl md:text-6xl anim-rainbow rainbow-gradient animate-rainbow bg-clip-text text-transparent"
+<script lang="ts">
+</script>
+
+<button
+	class="text-4xl anim-rainbow animate-rainbow bg-clip-text text-transparent bg-black duration-75"
+	class:rainbow-gradient={true}
+	on:click
 >
 	<slot />
-</h1>
+</button>
 
 <style>
 	.rainbow-gradient {

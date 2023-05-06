@@ -21,7 +21,7 @@
 </script>
 
 <AmazingTitle>Samanta's Card Game</AmazingTitle>
-<div class="flex gap-10 m-10">
+<div class="flex gap-10 md:flex-row flex-col justify-center">
 	{#each featuresArr as { title, description, icon }}
 		<FeatureCard {title} {description} {icon} />
 	{/each}
