@@ -56,7 +56,7 @@ export const setDailyCard = async (uid: string, photoId: number) => {
 
 export const getRandomCard: () => Promise<Photo> = async () => {
 	const random = Math.random();
-	const cardTier = random < 0.07 ? 3 : random < 0.2 ? 2 : 1;
+	const cardTier = random < 0.15 ? 3 : random < 0.35 ? 2 : 1;
 	const { data, error } = await supabase.from('photos').select('*').eq('tier', cardTier);
 
 	if (error) throw new Error('ocurrio un error cargando la carta');

@@ -2,7 +2,6 @@
 	import SideBar from '$lib/components/Nav/SideBar.svelte';
 	import { getSession, googleOAuth } from '$lib/supabase';
 	import sessionStore from '$lib/stores/session';
-	import AmazingLink from '$lib/components/Text/AmazingLink.svelte';
 	import AmazingButton from '$lib/components/Text/AmazingButton.svelte';
 
 	const loadSession = async () => {
