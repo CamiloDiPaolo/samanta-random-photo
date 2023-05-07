@@ -24,22 +24,23 @@
 		await addScore($sessionStore.user.id, photo.tier);
 		await updateLeaderboard($sessionStore.user.id);
 
-		const FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
-		millisecondsToNextCard = FIVE_MINUTES_IN_MILLISECONDS;
+		showReloadButton = false;
+		const ONE_MINUTES_IN_MILLISECONDS = 1 * 60 * 1000;
+		millisecondsToNextCard = ONE_MINUTES_IN_MILLISECONDS;
 		initTimer();
 	};
 
 	const initTimer = () => {
 		if (!millisecondsToNextCard) return;
 
-		const FIVE_MINUTES_IN_SECONDS = 5 * 60;
+		const ONE_MINUTES_IN_SECONDS = 1 * 60;
 
 		let secondsUntilNextCard = Math.floor(millisecondsToNextCard / 1000);
 
 		const intervalId = setInterval(() => {
 			secondsUntilNextCard += 1;
 
-			const timeUntilNextCardInSeconds = FIVE_MINUTES_IN_SECONDS - secondsUntilNextCard;
+			const timeUntilNextCardInSeconds = ONE_MINUTES_IN_SECONDS - secondsUntilNextCard;
 
 			minutesCounter = Math.floor(timeUntilNextCardInSeconds / 60);
 			secondsCounter = Math.floor(timeUntilNextCardInSeconds % 60);
@@ -73,7 +74,7 @@
 			<Icon src={ArrowPath} class="w-10" />
 		</button>
 	{/if}
-	{#if millisecondsToNextCard && !showReloadButton && minutesCounter != 0 && secondsCounter != 0}
+	{#if millisecondsToNextCard && !showReloadButton && secondsCounter != 0}
 		<Timer minutes={minutesCounter} seconds={secondsCounter} />
 	{/if}
 {/if}

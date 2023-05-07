@@ -54,8 +54,6 @@
 			dispatch('card-discover', {});
 		}, ANIMATION_CYCLE_MILLISECONDS * 8 + ANIMATION_CYCLE_MILLISECONDS / 2);
 	};
-
-	console.log(cardInfo);
 </script>
 
 {#if !showDiscoveredCard}

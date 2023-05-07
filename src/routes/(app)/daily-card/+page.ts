@@ -22,10 +22,10 @@ export const load: PageLoad<{ photo: Photo; millisecondsToNextCard?: number }> =
 	const currentDate = new Date();
 	const newerCardDate = new Date(newerDailyCard.date);
 
-	const FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
+	const ONE_MINUTES_IN_MILLISECONDS = 1 * 60 * 1000;
 
 	const lastCardUnderFiveMinutes =
-		currentDate.getTime() - newerCardDate.getTime() < FIVE_MINUTES_IN_MILLISECONDS;
+		currentDate.getTime() - newerCardDate.getTime() < ONE_MINUTES_IN_MILLISECONDS;
 
 	if (lastCardUnderFiveMinutes)
 		return {
